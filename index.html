@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ServerPulse | Server Health Monitor</title>
+
+    <meta
+        name="description"
+        content="ServerPulse - Intelligent server health and recovery monitoring dashboard."
+    >
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div class="app-shell">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-mark">
+                    <i data-lucide="activity"></i>
+                </div>
+
+                <div>
+                    <h1>ServerPulse</h1>
+                    <span>Infrastructure Monitor</span>
+                </div>
+            </div>
+
+            <nav class="navigation">
+
+                <a href="#" class="nav-item active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Overview</span>
+                </a>
+
+                <a href="#services" class="nav-item">
+                    <i data-lucide="server"></i>
+                    <span>Services</span>
+                </a>
+
+                <a href="#activity" class="nav-item">
+                    <i data-lucide="scroll-text"></i>
+                    <span>Activity</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="demo-badge">
+                    <span class="pulse-dot"></span>
+
+                    <div>
+                        <strong>Demo Mode</strong>
+                        <small>Simulated environment</small>
+                    </div>
+                </div>
+
+                <div class="version">
+                    ServerPulse v1.0
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN ================= -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar">
+
+                <div>
+                    <div class="eyebrow">
+                        <span class="live-indicator"></span>
+                        LIVE MONITORING
+                    </div>
+
+                    <h2>Infrastructure Overview</h2>
+
+                    <p>
+                        Real-time visibility into your server health and services.
+                    </p>
+                </div>
+
+                <div class="topbar-actions">
+
+                    <div class="last-updated">
+                        <i data-lucide="refresh-cw"></i>
+                        <span>Updated just now</span>
+                    </div>
+
+                    <button
+                        class="icon-button"
+                        id="refreshButton"
+                        title="Refresh metrics"
+                    >
+                        <i data-lucide="rotate-cw"></i>
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= SERVER SUMMARY ================= -->
+            <section class="server-summary">
+
+                <div class="server-identity">
+
+                    <div class="server-icon">
+                        <i data-lucide="server-cog"></i>
+                    </div>
+
+                    <div>
+                        <span class="section-label">MONITORED INSTANCE</span>
+
+                        <h3>serverpulse-prod</h3>
+
+                        <div class="server-meta">
+                            <span>
+                                <i data-lucide="cloud"></i>
+                                AWS EC2
+                            </span>
+
+                            <span>
+                                <i data-lucide="map-pin"></i>
+                                ap-south-1
+                            </span>
+
+                            <span>
+                                <i data-lucide="monitor"></i>
+                                Linux
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="overall-health">
+
+                    <div class="health-ring" id="healthRing">
+                        <div class="health-ring-inner">
+                            <strong id="healthScore">96</strong>
+                            <span>HEALTH</span>
+                        </div>
+                    </div>
+
+                    <div class="health-copy">
+                        <span class="health-label">SYSTEM STATUS</span>
+                        <strong id="systemStatus">Healthy</strong>
+                        <small id="systemMessage">
+                            All monitored services are operating normally.
+                        </small>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= METRICS ================= -->
+            <section class="metrics-grid">
+
+                <!-- CPU -->
+                <article class="metric-card">
+
+                    <div class="metric-top">
+                        <div class="metric-title">
+                            <div class="metric-icon cpu">
+                                <i data-lucide="cpu"></i>
+                            </div>
+
+                            <div>
+                                <span>CPU USAGE</span>
+                                <small>Processor load</small>
+                            </div>
+                        </div>
+
+                        <span class="metric-status healthy" id="cpuStatus">
+                            Normal
+                        </span>
+                    </div>
+
+                    <div class="metric-value">
+                        <strong id="cpuValue">32</strong>
+                        <span>%</span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill cpu-fill"
+                            id="cpuBar"
+                            style="width: 32%"
+                        ></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>4 vCPU</span>
+                        <span id="cpuTrend">Stable</span>
+                    </div>
+
+                </article>
+
+
+                <!-- RAM -->
+                <article class="metric-card">
+
+                    <div class="metric-top">
+                        <div class="metric-title">
+                            <div class="metric-icon ram">
+                                <i data-lucide="memory-stick"></i>
+                            </div>
+
+                            <div>
+                                <span>MEMORY</span>
+                                <small>RAM utilization</small>
+                            </div>
+                        </div>
+
+                        <span class="metric-status healthy" id="ramStatus">
+                            Normal
+                        </span>
+                    </div>
+
+                    <div class="metric-value">
+                        <strong id="ramValue">48</strong>
+                        <span>%</span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill ram-fill"
+                            id="ramBar"
+                            style="width: 48%"
+                        ></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>3.8 / 8 GB</span>
+                        <span>Stable</span>
+                    </div>
+
+                </article>
+
+
+                <!-- DISK -->
+                <article class="metric-card">
+
+                    <div class="metric-top">
+                        <div class="metric-title">
+                            <div class="metric-icon disk">
+                                <i data-lucide="hard-drive"></i>
+                            </div>
+
+                            <div>
+                                <span>DISK USAGE</span>
+                                <small>Storage capacity</small>
+                            </div>
+                        </div>
+
+                        <span class="metric-status healthy" id="diskStatus">
+                            Healthy
+                        </span>
+                    </div>
+
+                    <div class="metric-value">
+                        <strong id="diskValue">41</strong>
+                        <span>%</span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            class="progress-fill disk-fill"
+                            id="diskBar"
+                            style="width: 41%"
+                        ></div>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>32.8 / 80 GB</span>
+                        <span>+2.1 GB free</span>
+                    </div>
+
+                </article>
+
+
+                <!-- UPTIME -->
+                <article class="metric-card uptime-card">
+
+                    <div class="metric-top">
+
+                        <div class="metric-title">
+
+                            <div class="metric-icon uptime">
+                                <i data-lucide="clock-3"></i>
+                            </div>
+
+                            <div>
+                                <span>UPTIME</span>
+                                <small>Continuous availability</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="metric-value uptime-value">
+                        <strong id="uptimeValue">12h 34m</strong>
+                    </div>
+
+                    <div class="uptime-line">
+                        <span></span>
+                    </div>
+
+                    <div class="metric-footer">
+                        <span>Last restart</span>
+                        <span>12h 34m ago</span>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- ================= CHART + SERVICES ================= -->
+            <section class="content-grid">
+
+                <!-- Chart -->
+                <article class="panel chart-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="section-label">PERFORMANCE</span>
+                            <h3>Resource activity</h3>
+                        </div>
+
+                        <div class="chart-legend">
+                            <span>
+                                <i class="legend cpu-legend"></i>
+                                CPU
+                            </span>
+
+                            <span>
+                                <i class="legend ram-legend"></i>
+                                Memory
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="chart-wrapper">
+
+                        <div class="y-labels">
+                            <span>100%</span>
+                            <span>75%</span>
+                            <span>50%</span>
+                            <span>25%</span>
+                            <span>0%</span>
+                        </div>
+
+                        <div class="chart-area">
+
+                            <div class="grid-lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <svg
+                                class="performance-chart"
+                                viewBox="0 0 800 260"
+                                preserveAspectRatio="none"
+                            >
+
+                                <defs>
+                                    <linearGradient
+                                        id="cpuGradient"
+                                        x1="0"
+                                        y1="0"
+                                        x2="0"
+                                        y2="1"
+                                    >
+                                        <stop
+                                            offset="0%"
+                                            stop-color="#b7f34a"
+                                            stop-opacity=".35"
+                                        />
+                                        <stop
+                                            offset="100%"
+                                            stop-color="#b7f34a"
+                                            stop-opacity="0"
+                                        />
+                                    </linearGradient>
+
+                                    <linearGradient
+                                        id="ramGradient"
+                                        x1="0"
+                                        y1="0"
+                                        x2="0"
+                                        y2="1"
+                                    >
+                                        <stop
+                                            offset="0%"
+                                            stop-color="#57d9c2"
+                                            stop-opacity=".25"
+                                        />
+                                        <stop
+                                            offset="100%"
+                                            stop-color="#57d9c2"
+                                            stop-opacity="0"
+                                        />
+                                    </linearGradient>
+                                </defs>
+
+                                <path
+                                    id="cpuArea"
+                                    class="chart-area-fill cpu-area-fill"
+                                    d=""
+                                ></path>
+
+                                <path
+                                    id="ramArea"
+                                    class="chart-area-fill ram-area-fill"
+                                    d=""
+                                ></path>
+
+                                <polyline
+                                    id="cpuLine"
+                                    class="chart-line cpu-line"
+                                    points=""
+                                ></polyline>
+
+                                <polyline
+                                    id="ramLine"
+                                    class="chart-line ram-line"
+                                    points=""
+                                ></polyline>
+
+                            </svg>
+
+                        </div>
+
+                    </div>
+
+                    <div class="chart-time">
+                        <span>10 min ago</span>
+                        <span>5 min ago</span>
+                        <span>Now</span>
+                    </div>
+
+                </article>
+
+
+                <!-- Services -->
+                <article class="panel services-panel" id="services">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="section-label">SERVICES</span>
+                            <h3>Service health</h3>
+                        </div>
+
+                        <span class="service-count">
+                            <strong id="runningCount">3</strong>/3 running
+                        </span>
+
+                    </div>
+
+
+                    <div class="service-list">
+
+                        <div class="service-row" id="apacheService">
+
+                            <div class="service-info">
+
+                                <div class="service-icon">
+                                    <i data-lucide="globe-2"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Apache HTTP</strong>
+                                    <small>Web server</small>
+                                </div>
+
+                            </div>
+
+                            <span class="service-status running">
+                                <i data-lucide="circle-check"></i>
+                                <span>Running</span>
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-row">
+
+                            <div class="service-info">
+
+                                <div class="service-icon">
+                                    <i data-lucide="database"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Database</strong>
+                                    <small>Data service</small>
+                                </div>
+
+                            </div>
+
+                            <span class="service-status running">
+                                <i data-lucide="circle-check"></i>
+                                <span>Running</span>
+                            </span>
+
+                        </div>
+
+
+                        <div class="service-row">
+
+                            <div class="service-info">
+
+                                <div class="service-icon">
+                                    <i data-lucide="shield-check"></i>
+                                </div>
+
+                                <div>
+                                    <strong>System Agent</strong>
+                                    <small>Management agent</small>
+                                </div>
+
+                            </div>
+
+                            <span class="service-status running">
+                                <i data-lucide="circle-check"></i>
+                                <span>Running</span>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- ================= ACTION CENTER ================= -->
+            <section class="action-panel panel">
+
+                <div class="action-heading">
+
+                    <div class="action-icon">
+                        <i data-lucide="wrench"></i>
+                    </div>
+
+                    <div>
+                        <span class="section-label">OPERATIONS</span>
+                        <h3>Simulation & recovery center</h3>
+
+                        <p>
+                            Test how ServerPulse detects and responds to infrastructure issues.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        class="action-button warning-action"
+                        id="highCpuButton"
+                    >
+                        <i data-lucide="flame"></i>
+
+                        <div>
+                            <strong>Simulate High CPU</strong>
+                            <small>Trigger a warning</small>
+                        </div>
+                    </button>
+
+
+                    <button
+                        class="action-button danger-action"
+                        id="serviceFailureButton"
+                    >
+                        <i data-lucide="triangle-alert"></i>
+
+                        <div>
+                            <strong>Simulate Service Failure</strong>
+                            <small>Stop Apache</small>
+                        </div>
+                    </button>
+
+
+                    <button
+                        class="action-button recovery-action"
+                        id="recoveryButton"
+                    >
+                        <i data-lucide="shield-check"></i>
+
+                        <div>
+                            <strong>Run Recovery</strong>
+                            <small>Restore server health</small>
+                        </div>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= ACTIVITY ================= -->
+            <section
+                class="panel activity-panel"
+                id="activity"
+            >
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="section-label">AUDIT TRAIL</span>
+                        <h3>Recent activity</h3>
+                    </div>
+
+                    <button
+                        class="clear-button"
+                        id="clearActivity"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="activity-list"
+                    id="activityList"
+                >
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon success">
+                            <i data-lucide="check"></i>
+                        </div>
+
+                        <div class="activity-details">
+                            <strong>Health check completed</strong>
+                            <span>All monitored resources are healthy.</span>
+                        </div>
+
+                        <time>Just now</time>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon info">
+                            <i data-lucide="refresh-cw"></i>
+                        </div>
+
+                        <div class="activity-details">
+                            <strong>Metrics refreshed</strong>
+                            <span>Server resource data updated.</span>
+                        </div>
+
+                        <time>1 min ago</time>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+
+                <span>
+                    ServerPulse · Intelligent infrastructure monitoring
+                </span>
+
+                <span>
+                    Demo environment · No real AWS resources connected
+                </span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
