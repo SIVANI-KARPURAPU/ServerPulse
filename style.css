@@ -1343,3 +1343,88 @@ button {
         padding: 18px;
     }
 }
+
+
+/* ================= READABILITY IMPROVEMENTS ================= */
+
+/* Metric card supporting text */
+.metric-title small {
+    font-size: 11px;
+}
+
+.metric-footer {
+    font-size: 10px;
+}
+
+/* Server information */
+.server-meta span {
+    font-size: 11px;
+}
+
+/* Health description */
+.health-label {
+    font-size: 10px;
+}
+
+.health-copy small {
+    font-size: 11px;
+}
+
+/* Service section */
+.service-info strong {
+    font-size: 12px;
+}
+
+.service-info small {
+    font-size: 10px;
+}
+
+.service-status {
+    font-size: 10px;
+}
+
+/* Chart labels */
+.y-labels,
+.chart-time {
+    font-size: 9px;
+}
+
+/* Action section */
+.action-heading p {
+    font-size: 10px;
+}
+
+.action-button strong {
+    font-size: 10px;
+}
+
+.action-button small {
+    font-size: 9px;
+}
+
+/* Activity section */
+.activity-details strong {
+    font-size: 11px;
+}
+
+.activity-details span {
+    font-size: 10px;
+}
+
+.activity-item time {
+    font-size: 9px;
+}
+
+/* Sidebar */
+.demo-badge small {
+    font-size: 10px;
+}
+
+.version {
+    font-size: 10px;
+}
+
+/* Footer */
+.footer {
+    font-size: 9px;
+}
